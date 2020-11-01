@@ -1,0 +1,8 @@
+[
+  {
+    "class": "net.johanbasson.desktop.extractors.TextFileExtractor",
+    "types": [
+      "text/plain"
+    ]
+  }
+]
