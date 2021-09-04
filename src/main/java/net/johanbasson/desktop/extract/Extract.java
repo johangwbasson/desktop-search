@@ -29,10 +29,20 @@ public class Extract {
     }
 
     public String getFullPath() {
-        return directory.concat(File.pathSeparator).concat(fileName);
+        return directory.concat(File.separator).concat(fileName);
     }
 
     public long getSize() {
         return size;
+    }
+
+    @Override
+    public String toString() {
+        return "Extract{" +
+                "fileName='" + fileName + '\'' +
+                ", directory='" + directory + '\'' +
+                ", size=" + size +
+                ", contentType='" + contentType + '\'' +
+                '}';
     }
 }

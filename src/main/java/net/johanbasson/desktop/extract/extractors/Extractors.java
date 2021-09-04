@@ -1,4 +1,4 @@
-package net.johanbasson.desktop.extractors;
+package net.johanbasson.desktop.extract.extractors;
 
 
 import org.json.simple.JSONArray;

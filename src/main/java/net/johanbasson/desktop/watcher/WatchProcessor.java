@@ -1,5 +1,6 @@
 package net.johanbasson.desktop.watcher;
 
+import net.johanbasson.desktop.exclusions.Exclusions;
 import net.johanbasson.desktop.extract.Extract;
 import org.apache.tika.Tika;
 import org.slf4j.Logger;
@@ -29,19 +30,24 @@ public class WatchProcessor implements Runnable {
             yield();
             try {
                 FileWatchEvent event = watchQueue.take();
-
                 log.info("Received: " + event.getFile() + " Type : " + event.getType());
 
-                if (Type.MODIFIED.equals(event.getType())) {
-                    File file = event.getFile().toFile();
-                    if (file.exists()) {
-                        try {
-                            String contentType = tika.detect(file);
-                            extractQueue.add(new Extract(file.getName(), file.getParentFile().getAbsolutePath(), file.length(), contentType));
-                        }catch (IOException ex) {
-                            log.error("Could not detect content type", ex);
+                if (!Exclusions.isExcluded(event.getFile().toFile())) {
+
+                    if (Type.MODIFIED.equals(event.getType())) {
+                        File file = event.getFile().toFile();
+                        if (file.exists()) {
+                            try {
+                                String contentType = tika.detect(file);
+                                extractQueue.add(new Extract(file.getName(), file.getParentFile().getAbsolutePath(), file.length(), contentType));
+                            } catch (IOException ex) {
+                                log.error("Could not detect content type", ex);
+                            }
                         }
                     }
+
+                } else {
+                    log.info("File {} is excluded", event.getFile());
                 }
             } catch (InterruptedException e) {
                 log.error("Interrupted", e);

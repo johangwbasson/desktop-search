@@ -41,7 +41,7 @@ public class Index {
     }
 
     public String getFullPath() {
-        return directory.concat(File.pathSeparator).concat(fileName);
+        return directory.concat(File.separator).concat(fileName);
     }
 
 
@@ -57,7 +57,6 @@ public class Index {
                 ", directory='" + directory + '\'' +
                 ", size=" + size +
                 ", contentType='" + contentType + '\'' +
-                ", content='" + content + '\'' +
                 '}';
     }
 }

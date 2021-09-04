@@ -1,4 +1,4 @@
-package net.johanbasson.desktop.extractors;
+package net.johanbasson.desktop.extract.extractors;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;

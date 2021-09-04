@@ -1,8 +1,42 @@
 [
   {
-    "class": "net.johanbasson.desktop.extractors.TextFileExtractor",
+    "class": "net.johanbasson.desktop.extract.extractors.TextFileExtractor",
     "types": [
-      "text/plain"
+      "application/atom+xml",
+      "application/ecmascript",
+      "application/javascript",
+      "application/json",
+      "application/rss+xml",
+      "application/x-bat",
+      "application/x-csh",
+      "application/x-ecmascript",
+      "application/x-javascript",
+      "application/x-sh",
+      "application/xhtml+xml",
+      "application/xml",
+      "text/calendar",
+      "text/csv",
+      "text/ecmascript",
+      "text/html",
+      "text/javascript",
+      "text/javascript1.0",
+      "text/javascript1.1",
+      "text/javascript1.2",
+      "text/javascript1.3",
+      "text/javascript1.4",
+      "text/javascript1.5",
+      "text/jscript",
+      "text/livescript",
+      "text/markdown",
+      "text/plain",
+      "text/x-ecmascript",
+      "text/x-java-properties",
+      "text/x-java-source",
+      "text/x-javascript",
+      "text/x-markdown",
+      "text/x-script.python",
+      "text/x-web-markdown",
+      "text/x-groovy"
     ]
   }
 ]

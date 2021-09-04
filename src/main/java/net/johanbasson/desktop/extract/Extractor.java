@@ -1,8 +1,8 @@
 package net.johanbasson.desktop.extract;
 
-import net.johanbasson.desktop.extractors.ExtractorMapping;
-import net.johanbasson.desktop.extractors.Extractors;
-import net.johanbasson.desktop.extractors.FileExtractor;
+import net.johanbasson.desktop.extract.extractors.ExtractorMapping;
+import net.johanbasson.desktop.extract.extractors.Extractors;
+import net.johanbasson.desktop.extract.extractors.FileExtractor;
 import net.johanbasson.desktop.index.Action;
 import net.johanbasson.desktop.index.Index;
 import org.json.simple.parser.ParseException;
@@ -23,7 +23,6 @@ public class Extractor implements Runnable {
     private final BlockingQueue<Index> indexQueue;
     private final List<ExtractorMapping> mappings;
 
-
     public Extractor(BlockingQueue<Extract> extractQueue, BlockingQueue<Index> indexQueue) throws IOException, ParseException {
         this.extractQueue = extractQueue;
         this.indexQueue = indexQueue;
@@ -36,16 +35,20 @@ public class Extractor implements Runnable {
             yield();
             try {
                 Extract extract = extractQueue.take();
+                log.debug("Received extract request: {}", extract.toString());
                 FileExtractor fileExtractor = getFileExtractor(extract);
                 if (fileExtractor != null) {
+                    log.debug("Extracting text from file");
                     File file = new File(extract.getFullPath());
                     try {
-                        indexQueue.add(new Index(Action.MODIFY, extract.getFileName(), extract.getDirectory(), extract.getSize(), extract.getContentType(), fileExtractor.extract(file)));
+                        log.debug("Queuing for indexing");
+                        indexQueue.add(new Index(Action.ADD, extract.getFileName(), extract.getDirectory(), extract.getSize(), extract.getContentType(), fileExtractor.extract(file)));
                     } catch (IOException e) {
                         log.error("Could not extract text from file", e);
                     }
                 } else {
-                    indexQueue.add(new Index(Action.MODIFY, extract.getFileName(), extract.getDirectory(), extract.getSize(), extract.getContentType(), null));
+                    log.info("Queuing for indexing");
+                    indexQueue.add(new Index(Action.ADD, extract.getFileName(), extract.getDirectory(), extract.getSize(), extract.getContentType(), null));
                 }
 
             } catch (InterruptedException e) {
